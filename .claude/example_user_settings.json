@@ -1,0 +1,21 @@
+{
+  "model": "sonnet",
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
+  },
+  "autoUpdatesChannel": "stable",
+  "minimumVersion": "2.1.61",
+  "_comment_00": "^^^ is standard/generated vvv is useful custom config.",
+  "permissions": {
+    "_comment_00": "prevent wasted tokens scanning git db and claude working storage.",
+    "deny": ["Read(./.git/**)", "Read(./.claude/**)"]
+  },
+  "fileFiltering": {
+    "_comment_00": "prevent wasted tokens scanning masked by .gitignore",
+    "respectGitignore": true
+  },
+  "env": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+  }
+}
