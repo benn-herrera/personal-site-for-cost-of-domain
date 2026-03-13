@@ -14,7 +14,7 @@ src/index.js                          — The worker: all request routing logic 
 public/
   my-personal-site.me/
     index.html                        — Placeholder for site 1
-  my-other-personal-site.me/
+  my-second-personal-site.me/
     index.html                        — Placeholder for site 2 (delete if not needed)
 ```
 
@@ -24,7 +24,7 @@ public/
 
 ```js
 // src/index.js line 4 — must mirror public/ subdirectory names
-const sites = ["my-personal-site.me", "my-other-personal-site.me"];
+const sites = ["my-personal-site.me", "my-second-personal-site.me"];
 ```
 
 If a domain isn't in `sites`, the worker returns 503. If a directory doesn't exist in `public/` for a domain that is in `sites`, asset fetches will 404.
@@ -55,7 +55,7 @@ So a request for `/about.html` on `my-personal-site.me` fetches `public/my-perso
 
 **Rename for a single domain:**
 1. Rename `public/my-personal-site.me/` to `public/<their-domain>/`
-2. Delete `public/my-other-personal-site.me/` (or rename it too)
+2. Delete `public/my-second-personal-site.me/` (or rename it too)
 3. Update the `sites` array in `src/index.js` to `["<their-domain>"]`
 4. Update `wrangler.jsonc` `"name"` field to match their worker project name
 

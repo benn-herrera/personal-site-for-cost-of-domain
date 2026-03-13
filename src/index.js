@@ -1,7 +1,7 @@
 export default {
   async fetch(request, env) {
     // each entry in this list needs a directory in public/ of the same name to be the content root for that site.
-    const sites = ["my-personal-site.me", "my-other-personal-site.me"];
+    const sites = ["my-personal-site.me", "my-second-personal-site.me"];
     const url = new URL(request.url);
     var domain = url.hostname;
     let setCookie = null;

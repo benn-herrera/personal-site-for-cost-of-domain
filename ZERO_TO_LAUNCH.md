@@ -32,6 +32,7 @@ Your code editor likely has built-in git support, but the command line tools wil
 ## Create GitHub account (skip if you already have one appropriate for this project)
 
 ## [Create a new repo from this template](https://github.com/new?template_name=personal-site-for-cost-of-domain&template_owner=benn-herrera) (link will start the process)
+  * IMPORTANT: If you want the Markdown -> Web 1.0 Workflow tooling, check "Include all branches" (or you'll just get the skeleton project on "main")
   * Choose a repo name indicating it is a worker project (e.g. personal-site-worker) 
     * Don't name it after your domain - this could easily get confusing or out of date
     * You can actually back multiple domains from one worker project
@@ -55,12 +56,12 @@ Your code editor likely has built-in git support, but the command line tools wil
 ### See how multi-site support works (optional - skip if you're only going to serve one domain)
 If you want to serve multiple sites (domains) from this worker you'll need to know how this works.
 AGENTS.md has details, but here's how to test it out of the box.
-* In your browser after the URL in the address bar `http://localhost:8787` add a query parameter so it looks like this: `http://localhost:8787?d=my-other-personal-site.me` and hit 'enter'
-* You should see the title and text change to "My Other Personal Site".
+* In your browser after the URL in the address bar `http://localhost:8787` add a query parameter so it looks like this: `http://localhost:8787?d=my-second-personal-site.me` and hit 'enter'
+* You should see the title and text change to "My Second Personal Site".
 
 The `d` (for domain) query parameter is "sticky" (via a cookie) - after you use it once that's the site it will stay on until you change it back or launch a new browser.
 
-You'll notice if you edit the URL and remove the `?d=my-other-personal-site.me` and hit 'enter' it will stay on "My Other Personal Site" - that's the sticky behavior.
+You'll notice if you edit the URL and remove the `?d=my-second-personal-site.me` and hit 'enter' it will stay on "My Second Personal Site" - that's the sticky behavior.
 
 You can switch back by changing the URL to `http://localhost:8787?d=my-personal-site.me`, and if you remove the query, again, it will stay with the last site you specified.
  
@@ -71,9 +72,9 @@ You can switch back by changing the URL to `http://localhost:8787?d=my-personal-
 * Under `public/` rename `my-personal-site.me` - change `my-personal-site.me` to the domain name you want to serve
   * If you don't have a domain name picked out, don't worry this is easy to change later
   * You don't *need* to change it, but it really helps keep things straight in your head
-  * If you're only going to serve one domain, delete `public/my-other-personal-site.me`
+  * If you're only going to serve one domain, delete `public/my-second-personal-site.me`
 * If you're going to serve multiple domains
-  * rename `my-other-personal-site.me` to your 2nd domain
+  * rename `my-second-personal-site.me` to your 2nd domain
   * create additional directories under `public/` for each domain you want to serve and put a placeholder `index.html` in each
 * Edit `src/index.js`
   * Update the `sites` list to exactly match the names of the directories in `public/` (no trailing slashes)
