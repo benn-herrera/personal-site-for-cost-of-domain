@@ -32,6 +32,7 @@ Your code editor likely has built-in git support, but the command line tools wil
 ## Create GitHub account (skip if you already have one appropriate for this project)
 
 ## [Create a new repo from this template](https://github.com/new?template_name=personal-site-for-cost-of-domain&template_owner=benn-herrera) (link will start the process)
+  * IMPORTANT: If you want the Markdown -> Web 1.0 Workflow tooling, check "Include all branches" (or you'll just get the skeleton project on "main")
   * Choose a repo name indicating it is a worker project (e.g. personal-site-worker) 
     * Don't name it after your domain - this could easily get confusing or out of date
     * You can actually back multiple domains from one worker project
