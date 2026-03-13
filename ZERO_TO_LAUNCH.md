@@ -37,6 +37,10 @@ Your code editor likely has built-in git support, but the command line tools wil
     * You can actually back multiple domains from one worker project
   * Clone it locally - for doc purposes we'll assume you cloned it to ```~/projects/personal-site-worker``` (or the Windows equivalent)
 
+## IMPORTANT: If you want the Markdown -> Web 1.0 Workflow Tooling (keep going if you want the bare skeleton project)
+* Change your active git branch to "markdown-web-1.0-workflow" (```git checkout markdown-web-1.0-workflow```)
+* Jump back to the start of Install tools in that branch's version of this document
+  
 ## Initial Setup and Workflow
   
 ### Confirm it works out of the box
