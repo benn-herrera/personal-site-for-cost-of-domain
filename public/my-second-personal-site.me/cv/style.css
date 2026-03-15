@@ -1,0 +1,128 @@
+/* ── CV nav overrides ─────────────────────────────────────── */
+.cv-nav-contact {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-meta);
+    margin-top: 4px;
+    letter-spacing: 0;
+    white-space: nowrap;
+}
+
+nav {
+    align-items: stretch;
+}
+
+.name-mark {
+    min-width: 0;
+    overflow: visible;
+}
+
+.cv-nav-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.cv-download {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--text-meta);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+}
+
+.cv-download:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    text-decoration: none;
+}
+
+/* ── Section headings ─────────────────────────────────────── */
+.cv-body > h2 {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-meta);
+    margin-bottom: 16px;
+    padding-top: 28px;
+    margin-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.cv-body > h2:first-of-type {
+    border-top: none;
+    padding-top: 24px;
+    margin-top: 0;
+}
+
+/* ── Lists after section headings (Technical, Links) ─────── */
+.cv-body > h2 + ul {
+    list-style: none;
+    padding: 0;
+}
+
+.cv-body > h2 + ul > li {
+    font-size: 0.9rem;
+    color: var(--text-meta);
+    margin: 0.3em 0;
+}
+
+/* ── Role entries ─────────────────────────────────────────── */
+.cv-body > h3 {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+}
+
+.cv-body > h3:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+/* Company description: first p after h3 */
+.cv-body > h3 + p {
+    font-size: 0.82rem;
+    color: var(--text-meta);
+    font-style: italic;
+    margin-top: 2px;
+}
+
+/* Role title / dates: second p after h3 */
+.cv-body > h3 + p + p {
+    font-size: 0.82rem;
+    color: var(--text-meta);
+    margin-top: 3px;
+}
+
+/* Role title uses *italic* in source — undo em's default italic */
+.cv-body > h3 + p + p em {
+    font-style: normal;
+}
+
+/* ── Bullet list ──────────────────────────────────────────── */
+.cv-body > h3 + p + p + ul {
+    margin-top: 10px;
+    padding-left: 1.2em;
+    max-width: var(--measure);
+}
+
+.cv-body > h3 + p + p + ul > li {
+    font-size: 0.88rem;
+    margin: 0.3em 0;
+    line-height: 1.55;
+}
+
+.cv-body > h3 + p + p + ul ul {
+    margin-top: 0.25em;
+    padding-left: 1.2em;
+}

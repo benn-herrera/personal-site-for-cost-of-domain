@@ -1,0 +1,262 @@
+/* ── Reset ───────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+    --bg: #ffffff;
+    --surface: #cccccc;
+    --text: #000000;
+    --text-meta: #444444;
+    --border: #dddddd;
+    --accent: #00c0c0;
+    --accent-hover: #00ffff;
+
+    --font-body:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", system-ui,
+        sans-serif;
+
+    --measure: 80ch;
+    --col: 860px;
+    --gap: 1.7;
+}
+
+/* ── Dark mode ───────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #000000;
+        --surface: #222222;
+        --text: #ffffff;
+        --text-meta: #cccccc;
+        --border: #333333;
+        --accent: #afaf00;
+        --accent-hover: #ffff00;
+    }
+}
+
+/* ── Base ────────────────────────────────────────────────── */
+html {
+    font-size: 18px;
+    background: var(--bg);
+    color: var(--text);
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: var(--gap);
+    max-width: var(--col);
+    margin: 0 auto;
+    padding: 0 28px;
+}
+
+/* ── Nav ─────────────────────────────────────────────────── */
+nav {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 40px 0 36px;
+    border-bottom: 1px solid var(--border);
+}
+
+.name-mark {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.name-mark span {
+    display: block;
+    font-weight: 400;
+    color: var(--text-meta);
+    margin-top: 2px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+}
+
+nav a {
+    font-size: 0.875rem;
+    color: var(--text-meta);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
+nav a[aria-current="page"] {
+    color: var(--accent);
+}
+
+.nav-sep {
+    border-left: 1px solid var(--border);
+    padding-left: 28px;
+}
+
+/* ── Links ───────────────────────────────────────────────── */
+a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    text-underline-offset: 3px;
+}
+
+a:hover {
+    color: var(--accent-hover);
+    text-decoration-color: var(--accent-hover);
+}
+
+/* ── Headings ────────────────────────────────────────────── */
+h1 {
+    font-size: 2.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--text);
+}
+
+h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text);
+}
+
+h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* ── Prose ───────────────────────────────────────────────── */
+p {
+    max-width: var(--measure);
+    margin-top: 1em;
+}
+
+/* ── Sections ────────────────────────────────────────────── */
+section {
+    padding: 56px 0;
+    border-top: 1px solid var(--border);
+}
+
+section h2 {
+    margin-bottom: 8px;
+}
+
+/* ── Intro ───────────────────────────────────────────────── */
+.intro {
+    padding-top: 60px;
+    border-top: none;
+}
+
+.intro .lede {
+    font-size: 1.1rem;
+    color: var(--text-meta);
+    max-width: 58ch;
+    margin-top: 0;
+    margin-bottom: 1.2em;
+}
+
+/* ── Story fold ──────────────────────────────────────────── */
+.story details > summary {
+    list-style: none;
+    cursor: pointer;
+}
+.story details > summary::-webkit-details-marker {
+    display: none;
+}
+.story details > summary h3::before {
+    content: "▸\00a0";
+    color: var(--accent);
+}
+.story details[open] > summary h3::before {
+    content: "▾\00a0";
+}
+
+/* ── AI disclosure ───────────────────────────────────────── */
+p.ai-disclosure {
+    margin-top: 40px;
+    font-size: 0.82rem;
+    color: var(--text-meta);
+}
+
+/* ── Story block ─────────────────────────────────────────── */
+.story {
+    margin-top: 48px;
+}
+
+.story + .story {
+    margin-top: 52px;
+    padding-top: 52px;
+    border-top: 1px solid var(--border);
+}
+
+.story-lead {
+    margin-bottom: 20px;
+}
+
+.story-lead h3 {
+    margin-bottom: 4px;
+}
+
+.story-lead .meta {
+    font-size: 0.8rem;
+    color: var(--text-meta);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* ── Blockquote ──────────────────────────────────────────── */
+blockquote {
+    border-left: 3px solid var(--border);
+    padding-left: 18px;
+    margin: 24px 0;
+    color: var(--text-meta);
+    font-style: italic;
+    max-width: 58ch;
+}
+
+blockquote p {
+    margin-top: 0;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 0 40px;
+    margin-top: 8px;
+}
+
+footer p {
+    font-size: 0.8rem;
+    color: var(--text-meta);
+    margin: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav ul {
+        gap: 20px;
+    }
+}

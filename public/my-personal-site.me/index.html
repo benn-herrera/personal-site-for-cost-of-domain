@@ -1,9 +1,75 @@
-<html>
+<!doctype html>
+<html lang="en">
     <head>
-        <title>My Personal Site</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>my-personal-site.me</title>
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="stylesheet" href="/style.css" />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="my-personal-site.me"
+            href="/feed/"
+        />
     </head>
     <body>
-        <h1>Hello, Web from My Personal Site</h1>
+        <nav>
+            <div class="name-rss">
+                <a class="name-mark" href="/">my-personal-site.me</a>
+                <a href="/feed/" class="rss-feed-link"
+                    ><span class="rss-icon"></span> RSS</a
+                >
+            </div>
+            <ul>
+                <li><a href="/" aria-current="page">writing</a></li>
+                <li><a href="/projects/">projects</a></li>
+                <li><a href="https://my-second-personal-site.me">about↗</a></li>
+            </ul>
+        </nav>
+
+        <section>
+            <div class="section-header">
+                <h2>writing</h2>
+            </div>
+
+            <div class="callout">
+            <p>I have something to say: It’s better to burn out than to
+            <a href="/writing/callout-article/">fade away</a></p>
+            </div>
+            <div class="post-list">
+            <div class="post-item">
+            <p><span class="post-date">2026-03-14</span></p>
+            <p><a href="/writing/sample-article-three/"
+            class="post-title">Sample Article Three: A Clever
+            Subtitle</a></p>
+            <div class="post-tags">
+            <p><span class="tag">topic-tag1</span> <span
+            class="tag">topic-tag2</span></p>
+            </div>
+            </div>
+            <div class="post-item">
+            <p><span class="post-date">2026-02-14</span></p>
+            <p><a href="/writing/sample-article-two/"
+            class="post-title">Sample Article Two: A Clever
+            Subtitle</a></p>
+            <div class="post-tags">
+            <p><span class="tag">topic-tag1</span> <span
+            class="tag">topic-tag2</span></p>
+            </div>
+            </div>
+            <div class="post-item">
+            <p><span class="post-date">2026-01-14</span></p>
+            <p><a href="/writing/sample-article-one/"
+            class="post-title">Sample Article One: A Clever
+            Subtitle</a></p>
+            <div class="post-tags">
+            <p><span class="tag">topic-tag1</span> <span
+            class="tag">topic-tag2</span></p>
+            </div>
+            </div>
+            </div>
+        </section>
     </body>
-    <html></html>
 </html>

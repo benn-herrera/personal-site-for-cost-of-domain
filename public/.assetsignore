@@ -1,0 +1,5 @@
+Makefile
+filters/
+templates/
+*.template.html
+*.lua
