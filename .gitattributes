@@ -3,3 +3,9 @@
 *.webp filter=lfs diff=lfs merge=lfs -text
 *.glb filter=lfs diff=lfs merge=lfs -text
 *.bin filter=lfs diff=lfs merge=lfs -text
+maint/bin/site-tool-windows-amd64.exe filter=lfs diff=lfs merge=lfs -text
+maint/bin/site-tool-windows-arm64.exe filter=lfs diff=lfs merge=lfs -text
+maint/bin/site-tool-darwin-amd64 filter=lfs diff=lfs merge=lfs -text
+maint/bin/site-tool-darwin-arm64 filter=lfs diff=lfs merge=lfs -text
+maint/bin/site-tool-linux-amd64 filter=lfs diff=lfs merge=lfs -text
+maint/bin/site-tool-linux-arm64 filter=lfs diff=lfs merge=lfs -text

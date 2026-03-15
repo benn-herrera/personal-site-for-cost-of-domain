@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>$title$ — my-personal-site.me</title>
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="stylesheet" href="/style.css" />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="my-personal-site.me"
+            href="/feed/"
+        />
+        <style>
+            .project {
+                padding: 28px 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .project:first-child {
+                border-top: 1px solid var(--border);
+            }
+
+            .project-header {
+                display: flex;
+                align-items: baseline;
+                gap: 14px;
+                margin-bottom: 10px;
+            }
+
+            .project-header > p {
+                display: contents;
+            }
+
+            .project-name {
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                font-weight: 600;
+                color: var(--text);
+            }
+
+            .project-status {
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                color: var(--text-meta);
+                background: var(--surface-2);
+                border: 1px solid var(--text-meta);
+                padding: 1px 7px;
+                border-radius: 2px;
+            }
+
+            .project-status.active {
+                color: var(--accent);
+                border-color: var(--accent-dim);
+            }
+
+            .project-desc {
+                max-width: var(--measure);
+                margin-top: 0;
+            }
+
+            .project-links {
+                display: flex;
+                gap: 18px;
+                margin-top: 10px;
+            }
+
+            .project-links > p {
+                display: contents;
+            }
+
+            .project-links a {
+                font-family: var(--font-mono);
+                font-size: 0.78rem;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <div class="name-rss">
+                <a class="name-mark" href="/">my-personal-site.me</a>
+                <a href="/feed/" class="rss-feed-link"
+                    ><span class="rss-icon"></span> RSS</a
+                >
+            </div>
+            <ul>
+                <li><a href="/">writing</a></li>
+                <li><a href="/projects/" aria-current="page">projects</a></li>
+                <li><a href="https://my-second-personal-site.me">about↗</a></li>
+            </ul>
+        </nav>
+
+        <section>
+            <h2>projects</h2>
+
+            $body$
+        </section>
+    </body>
+</html>

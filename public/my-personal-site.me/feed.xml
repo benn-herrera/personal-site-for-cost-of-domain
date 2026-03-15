@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>my-personal-site.me</title>
+    <link>https://my-personal-site.me/</link>
+    <description>Writing by My Name</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Mar 2026 10:05:14 +0000</lastBuildDate>
+    <atom:link href="https://my-personal-site.me/feed/" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Sample Article Three: A Clever Subtitle</title>
+      <link>https://my-personal-site.me/writing/sample-article-three/</link>
+      <guid isPermaLink="true">https://my-personal-site.me/writing/sample-article-three/</guid>
+      <pubDate>Sat, 14 Mar 2026 00:00:00 +0000</pubDate>
+      <description>A description of sample article two</description>
+    </item>
+    <item>
+      <title>Sample Article Two: A Clever Subtitle</title>
+      <link>https://my-personal-site.me/writing/sample-article-two/</link>
+      <guid isPermaLink="true">https://my-personal-site.me/writing/sample-article-two/</guid>
+      <pubDate>Sat, 14 Feb 2026 00:00:00 +0000</pubDate>
+      <description>A description of sample article two</description>
+    </item>
+    <item>
+      <title>Sample Article One: A Clever Subtitle</title>
+      <link>https://my-personal-site.me/writing/sample-article-one/</link>
+      <guid isPermaLink="true">https://my-personal-site.me/writing/sample-article-one/</guid>
+      <pubDate>Wed, 14 Jan 2026 00:00:00 +0000</pubDate>
+      <description>A description of sample article one</description>
+    </item>
+  </channel>
+</rss>
