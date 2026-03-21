@@ -13,6 +13,13 @@ if [[ -z "${MD}" || -z "${HTML}" || -z "${TEMPLATE}" ]]; then
     usage
 fi
 
+if [[ -n "${LOCALAPPDATA}" ]]; then
+    WIN_LAD=${LOCALAPPDATA//\\//}
+    WIN_LAD=/${WIN_LAD/:/}
+    PATH="${PATH}:${WIN_LAD}/Pandoc"
+fi
+
+
 if !(2>&1 which pandoc) > /dev/null; then
     echo "pandoc not installed or not in PATH"
     exit 1

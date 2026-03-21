@@ -39,6 +39,8 @@ You need git LFS (Large File Storage) to handle pulling the pre-built site-tool 
 * macOS: you're set from installing the xcode command line tools
 * Linux: ```make``` is available on package managers (apt or pacman) and is a dependency of many dev packages (e.g. "build-essential")
 * Windows: ```winget install -e --id GnuWin32.Make```
+* add `/c/Program Files (x86)/GnuWin32/bin` to your shell PATH in ${HOME}/.bashrc
+* OR add `C:\Program Files (x86)\GnuWin32\bin\make` to your Windows PATH via Advanced System Settings
 
 ### Pandoc
 This is the tool that converts Markdown to HTML for the .md -> .html web 1.0 authoring workflow
