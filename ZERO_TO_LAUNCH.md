@@ -53,6 +53,10 @@ This is used in the converting .svg images to .ico format for the Safari fallbac
 * Windows: ```winget install -e --id ImageMagick.ImageMagick```
 IMPORTANT: on macOS, the first step of the process (.svg -> .png) is done by qlmanage, which has a better SVG renderer than ImageMagick. On Windows and Linux ImageMagick does the entire conversion. You'll want to check your results when updating the favicon. (A message will print to the console reminding you to do so.)
 
+### Inkscape (Linux/Window Only)
+* Linux: ```sudo apt install inkscape``` or ```sudo pacman -S inkscape```
+* Windows: ```winget install Inkscape.Inkscape```
+
 
 ## Create GitHub account (skip if you already have one appropriate for this project)
 

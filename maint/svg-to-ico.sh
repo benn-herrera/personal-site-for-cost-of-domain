@@ -32,13 +32,31 @@ if [[ ! -x "${MAGICK}" ]]; then
     exit 1
 fi
 
+TMP_DIR="/tmp/svg-to-ico-${$}"
+
+function rm_tmp_dir() {
+    /bin/rm -rf "${TMP_DIR}"
+}
+
+trap rm_tmp_dir exit
+mkdir "${TMP_DIR}"
+
+TMP_PNG="${TMP_DIR}/favicon.svg.png"
+
 if [[ "${OS_NAME}" = "Darwin" ]]; then
-    # qlmanage SVG renderer is complete and reliable.
-    qlmanage -t -s 512 -o /tmp/ "${SVG}" 2>/dev/null
-    "${MAGICK}" /tmp/favicon.svg.png -define icon:auto-resize=32,16 "${ICO}"
+    qlmanage -t -s 512 -o "${TMP_DIR}/" "${SVG}" 2>/dev/null
 else
-    # ImageMagick SVG renderer is not fully complete. YMMV.
-    "${MAGICK}" "${SVG}" -define icon:auto-resize=32,16 "${ICO}"
-    echo "on ${OS_NAME} ImageMagick's incomplete SVG renderer is used directly. Verify your results."
-    echo "if the output is bad, try using a free online tool to do the conversion as a one-off."
+    INKSCAPE=$(which inkscape)
+    if [[ ! -x "${INKSCAPE}" ]]; then
+        if [[ "${OS_NAME}" != "Linux" ]]; then
+            INKSCAPE="C:/Program Files/Inkscape/bin/inkscape.exe"
+        fi
+    fi
+    if [[ ! -x "${INKSCAPE}" ]]; then
+        echo "inkscape not installed." 1>&2
+        exit 1
+    fi
+    "${INKSCAPE}" "${SVG}" --export-type=png --export-filename="${TMP_PNG}" -w 512 2> /dev/null
 fi
+
+"${MAGICK}" "${TMP_PNG}" -define icon:auto-resize=32,16 "${ICO}"
