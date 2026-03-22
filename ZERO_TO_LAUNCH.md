@@ -212,7 +212,7 @@ Now, all that's left is everything - but it's your everything.
 * After you're done with the initial setup and perusing this guide, you can delete it as well. All the information you'll need going forward is in AGENTS.md and your new README.md
 * If you're using a coding agent have it update AGENTS.md for you with the changes you've made. Keeping that up to date will save you a lot of trouble (and tokens).
 
-You're going to want a reasonable workflow that lets you make changes and try them out without the world seeing every typo and change of direction. The primary workflow is local - ```wrangler dev```, make your edits, check on your machine and other devices before deploying. If you want to get feedback from a select group of people or test things that have elements that need to be checked in a real environment you'll want to use preview deployments.
+You're going to want a reasonable workflow that lets you make changes and try them out without the world seeing every typo and change of direction. The primary workflow is local - ```make -C maint serve```, make your edits, check on your machine and other devices before deploying. If you want to get feedback from a select group of people or test things that have elements that need to be checked in a real environment you'll want to use preview deployments.
 
 If you are not familiar with using git branches and merging back to main, I highly recommend you look into it. Any AI chatbot can give you the hows and whys.
 
