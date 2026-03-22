@@ -15,6 +15,7 @@ IMPORTANT: If you absolutely must buy your domain first, jump to the section abo
 * Needed to install and run the Cloudflare Worker tool ```wrangler```
 * It's available on all major platform package managers: macOS (brew), Linux (apt or pacman), and Windows (winget)
 * Install or upgrade to the latest LTS version - wrangler requires version 18+ (as of this writing).
+* Linux: `nvm` seems to be the easiest path - ```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash``` then ```nvm install node```
 
 ### Wrangler
 * Command line tool for developing and managing Cloudflare Workers
