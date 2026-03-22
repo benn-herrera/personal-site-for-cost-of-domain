@@ -66,7 +66,7 @@ Site Makefiles define only what's site-specific on top of these shared rules.
 |---|---|---|
 | `public` | build all HTML + sync SVG colors + favicon (default target) | each site's `Makefile` |
 | `sync-svg-colors` | sync CSS colors into favicon.svg (UTD checked against style.css) | `maint/favicon.mk` |
-| `favicon` | regenerate favicon.ico from favicon.svg (requires ImageMagick; macOS uses qlmanage, Windows/Linux use ImageMagick directly — verify output) | `maint/favicon.mk` |
+| `favicon` | regenerate favicon.ico from favicon.svg (macOS uses qlmanage + ImageMagick, Windows/Linux use Inkscape + ImageMagick) | `maint/favicon.mk` |
 | `new-article` | scaffold a new article at `writing/$SLUG/index.md` from template (requires `SLUG=name`) | `public/my-personal-site.me/Makefile` |
 | `serve` | start wrangler dev on 0.0.0.0 (wrangler prints LAN IP in its startup banner) | `maint/Makefile` |
 

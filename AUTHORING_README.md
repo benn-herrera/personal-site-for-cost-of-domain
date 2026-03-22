@@ -119,7 +119,7 @@ cd public/my-personal-site.me && make sync-svg-colors
 cd public/my-second-personal-site.me && make sync-svg-colors
 ```
 
-To regenerate an `.ico` from its SVG (requires ImageMagick):
+To regenerate an `.ico` from its SVG:
 
 ```sh
 cd public/my-personal-site.me && make favicon
