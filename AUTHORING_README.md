@@ -126,8 +126,6 @@ cd public/my-personal-site.me && make favicon
 cd public/my-second-personal-site.me && make favicon
 ```
 
-On macOS, qlmanage is used for reliable SVG rendering. On Windows and Linux, ImageMagick's SVG renderer is used directly — verify the output looks correct. If the result is bad, fall back to a free online SVG→ICO converter as a one-off. This is rarely needed — only when the favicon design changes.
-
 ## site-tool
 
 `maint/site-tool.sh` is a platform-detecting wrapper around a compiled Go binary in `maint/bin/`. Pre-compiled binaries for all supported platforms are checked in via Git LFS. To build from source:
