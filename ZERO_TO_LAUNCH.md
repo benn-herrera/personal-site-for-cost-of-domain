@@ -21,7 +21,7 @@ The tools listed below are all that are required, but it is highly recommended t
 * Install it globally with ```npm install -g wrangler```
 
 ### A Code Editor
-* I really like [Zed](https://zed.dev). Wicked fast, lots of great stuff out of the box, free, lots of good extensions available. See instruction installations on their site.
+* I really like [Zed](https://zed.dev). Wicked fast, lots of great stuff out of the box, free, lots of good extensions available. See installation instructions on their site.
 * VS Code is also very popular
 
 ### Command Line Git Tools and Git LFS
@@ -112,7 +112,7 @@ IMPORTANT: Do not buy a domain from Wix, Squarespace or any of the one-stop-shop
   * Depending on what top level domain you choose (.me, .com, .dev, .ai, etc.) the price can vary significantly.
   * The standard choice for a personal site is .me
   * You may also want to add email handling
-    * You won't get an inbox, but you can forward messages sent to name@your-domain.me to get forwarded to an existing email address.
+    * You won't get an inbox, but you can forward messages sent to name@your-domain.me to an existing email address.
     * You can add separate addresses by name or create a catch-all address that forwards all email to a single inbox.
   * Ask your AI assistant about the security options to change - the defaults are frequently too permissive
 
