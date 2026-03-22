@@ -52,7 +52,9 @@ mkdir "${TMP_DIR}"
 TMP_PNG="${TMP_DIR}/tmp.png"
 
 if [[ "${OS_NAME}" = "Darwin" ]]; then
-    qlmanage -t -s 512 -o "${TMP_PNG}" "${SVG}" 2>/dev/null
+    qlmanage -t -s 512 -o "${TMP_DIR}/" "${SVG}" 2>/dev/null
+    # qlmanage does not allow exact file name specification.
+    TMP_PNG=$(echo "${TMP_DIR}"/*.png)
 else
     if !(2>&1 which inkscape) > /dev/null; then
         echo "svg-to-ico: Inkscape not installed or not in PATH"
