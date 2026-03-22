@@ -21,7 +21,7 @@ IMPORTANT: If you absolutely must buy your domain first, jump to the section abo
 * Install it globally with ```npm install -g wrangler```
 
 ### A Code Editor
-* I really like [Zed](https://zed.dev). Wicked fast, lots of great stuff out of the box, free, lots of good extensions available. See instruction installations on their site.
+* I really like [Zed](https://zed.dev). Wicked fast, lots of great stuff out of the box, free, lots of good extensions available. See installation instructions on their site.
 * VS Code is also very popular
 
 ### Command Line Git Tools (not required, strongly recommended)
@@ -127,7 +127,7 @@ The last steps here are for connecting that public presence to the name you actu
   * Depending on what top level domain you choose (.me, .com, .dev, .ai, etc.) the price can vary significantly.
   * The standard choice for a personal site is .me
   * You may also want to add email handling
-    * You won't get an inbox, but you can forward messages sent to name@your-domain.me to get forwarded to an existing email address.
+    * You won't get an inbox, but you can forward messages sent to name@your-domain.me to an existing email address.
     * You can add separate addresses by name or create a catch-all address that forwards all email to a single inbox.
   * Ask your AI assistant about the security options to change - the defaults are frequently too permissive
     * NOTE: if you end up with a different domain name (or names) than used back in [Change the Names to Match Your Project](#change-the-names-to-match-your-project) 
