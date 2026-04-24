@@ -5,7 +5,6 @@ set -e
 TOOL_NAME=$(basename "${0}")
 TOOL_NAME=${TOOL_NAME%.sh}
 SCRIPT_DIR=$(dirname "${0}")
-# realpath is not available on macOS (its bash is too old)
 SCRIPT_DIR=$(cd "${SCRIPT_DIR}" && pwd)
 
 OS=$(uname -s)

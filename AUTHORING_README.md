@@ -12,7 +12,7 @@
 
 * **Two or more domains, one deployment** — the worker routes by hostname, so two distinct sites can share one repo and one Cloudflare Worker. Useful for keeping a professional/CV site and a writing/projects site (plus any others you want to add) separate in identity while managing them together.
 
-* **Local development with multi-device preview** — `make -C maint serve` starts wrangler bound to `0.0.0.0`, making the local server reachable from any device on your network. Check mobile layout and Safari rendering without deploying.
+* **Local development with multi-device preview** — `make serve` starts wrangler bound to `0.0.0.0`, making the local server reachable from any device on your network. Check mobile layout and Safari rendering without deploying.
 
 ## Cheat Sheet
 Day-to-day authoring reference for this two-domain Cloudflare Worker site. The build pipeline converts Markdown to HTML via pandoc, driven by site Makefiles in each content root (`public/[site]/Makefile`). The authoring utilities at a glance:
@@ -39,7 +39,7 @@ The Worker (`src/index.js`) routes by hostname — each domain maps directly to 
 **Removing a domain** — delete the content root directory, then run:
 
 ```sh
-make -C maint sync-domain-names
+make sync-domain-names
 ```
 
 This updates `src/index.js` to reflect the remaining domains.
@@ -47,7 +47,7 @@ This updates `src/index.js` to reflect the remaining domains.
 ## Local development
 
 ```sh
-make -C maint serve
+make serve
 ```
 NOTE: this is synchronous.
 Wrangler prints your LAN IP in its startup banner.
@@ -131,8 +131,8 @@ cd public/my-second-personal-site.me && make favicon
 `maint/site-tool.sh` is a platform-detecting wrapper around a compiled Go binary in `maint/bin/`. Pre-compiled binaries for all supported platforms are checked in via Git LFS. To build from source:
 
 ```sh
-make -C maint site-tool        # build for current platform
-make -C maint site-tool-dist   # cross-compile all platforms
+make site-tool        # build for current platform
+make site-tool-dist   # cross-compile all platforms
 ```
 
 Subcommands: `glyphs`, `gen-toc`, `sync-svg-colors`, `version`. Run `site-tool <command> -help` for options.

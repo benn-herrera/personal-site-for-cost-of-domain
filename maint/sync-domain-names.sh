@@ -16,7 +16,7 @@ domains=\"${domains// /\", \"}\"
 new_sites_line="    const sites = [${domains}];"
 cur_sites_line=$(echo "${JS_TEXT}" | grep '    const sites = \[')
 
-# Compare to existing; skip write if unchanged (preserve timestamp)
+# Compare to existing; skip write if unchanged (preserve timestamp) and be quiet about it.
 [[ "${cur_sites_line}" == "${new_sites_line}" ]] && exit 0
 
 # Replace in-place with awk (portable: no sed -i dialect differences)

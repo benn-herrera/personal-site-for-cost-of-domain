@@ -47,9 +47,9 @@ cd public/my-personal-site.me && make public
 cd public/my-second-personal-site.me && make public
 ```
 
-Infra targets (`serve`, `site-tool`) are in `maint/Makefile` and are run from `maint/`:
+Infra targets (`serve`, `site-tool`) are in `Makefile`:
 ```sh
-cd maint && make serve
+make serve
 ```
 
 ### Makefile structure
@@ -68,16 +68,17 @@ Site Makefiles define only what's site-specific on top of these shared rules.
 | `sync-svg-colors` | sync CSS colors into favicon.svg (UTD checked against style.css) | `maint/favicon.mk` |
 | `favicon` | regenerate favicon.ico from favicon.svg (macOS uses qlmanage + ImageMagick, Windows/Linux use Inkscape + ImageMagick) | `maint/favicon.mk` |
 | `new-article` | scaffold a new article at `writing/$SLUG/index.md` from template (requires `SLUG=name`) | `public/my-personal-site.me/Makefile` |
-| `serve` | start wrangler dev on 0.0.0.0 (wrangler prints LAN IP in its startup banner) | `maint/Makefile` |
+| `serve` | start wrangler dev on 0.0.0.0 (wrangler prints LAN IP in its startup banner) | `Makefile` |
 
 Use `make -B [target]` to force a rebuild when only a filter changed — those are not in Make's dependency graph.
 
 ### pipeline components
 ```
+Makefile                      ← infra targets only: serve, site-tool
 maint/
-├── Makefile                  ← infra targets only: serve, site-tool
 ├── common.mk                 ← shared config, MD_SRCS/HTML_TARGETS, base %.html rule
-├── favicon.mk                ← shared sync-svg-colors and favicon targets
+├── common-targets.mk         ← shared targets common-public, sync-domain, serve plus targets from favicon.mk
+├── favicon.mk                ← shared sync-svg-colors and favicon targets (included by common-targets)
 ├── gen-html.sh               ← pandoc wrapper: parses filters: from frontmatter, invokes pandoc
 ├── site-tool.sh              ← platform-detecting wrapper; invokes bin/site-tool or bin/site-tool-{os}-{arch}
 ├── bin/                      ← compiled site-tool binaries (gitignored dev build + LFS dist builds)
