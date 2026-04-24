@@ -1,22 +1,25 @@
 MAINT_DIR := ../../maint
+
 # must come first
 include $(MAINT_DIR)/common.mk
+
+.PHONY: public
+
+# common_public and serve defined in common-targets.mk (i.e. 'make serve' works from this directory)
+# public is broken out like this so you can add custom dependencies to the default target after common_public
+public: common-public feed-xml
+
+# include after public: so public is the default target - provides serve sync-domain-names sync-svg-colors and favicon targets
+include $(MAINT_DIR)/common-targets.mk
+
+# custom rules and targets below this line
 
 FEED_XML              := feed.xml
 ARTICLE_LIST_TEMPLATE := templates/gen-toc-article-list.md
 ARTICLE_TEMPLATE      := writing/article.template.html
 
-.PHONY: public new-article sync-domain-names
-
-# HTML_TARGETS defined in common.mk
-# this rule is broken out from common to allow for custom dependencies in the public target
-public: $(HTML_TARGETS) sync-svg-colors favicon sync-domain-names
-
-sync-domain-names:
-	bash $(MAINT_DIR)/sync-domain-names.sh
-
-# include after public: so public is the default target - provides sync-svg-colors and favicon targets
-include $(MAINT_DIR)/favicon.mk
+.PHONY: feed-xml
+feed-xml: $(FEED_XML)
 
 # .md -> .html override rule for writing/ - they share a common template instead of a sibling .template.html per .md file
 # $(<) expands to the name of the first dependency (the markdown file)
@@ -43,6 +46,7 @@ index.md: templates/gen-toc-article-list.md always
 $(FEED_XML): index.md
 
 # block out a new article with a given slug
+.PHONY: new_article
 new-article:
 	@test -n "$(SLUG)" || { echo "Usage: make mps-new-article SLUG=my-article-slug" >&2; exit 1; }
 	@mkdir -p writing/$(SLUG)

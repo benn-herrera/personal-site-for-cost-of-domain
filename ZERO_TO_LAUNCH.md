@@ -77,7 +77,7 @@ This is used in the converting .svg images to .ico format for the Safari fallbac
   
 ### Confirm it works out of the box
 * Open a terminal and change directory to your project clone
-* Run ```make -C maint serve``` in a terminal - this runs `wrangler dev`
+* Run ```make serve``` in a terminal - this runs `wrangler dev`
   * The startup banner in the terminal will show the local URL your site is available at (e.g. `http://localhost:8787` or `http://192.168.4.55:8787`)
 * Hit 'b' in the terminal window to pop your browser to the local site
   * Your browser should be open showing the content for "My Personal Site"
@@ -141,7 +141,7 @@ If you skipped the domain purchase step and are not sure what your domain name w
   * Load `http://localhost:8787?d=<domain-name.tld>` for each domain to verify it's all working.
   * If it's not working you may need to restart wrangler
     * Hit 'q' in the `wrangler dev` terminal to stop the server
-    * Re-run ```make -C maint serve``` and refresh your browser
+    * Re-run ```make serve``` and refresh your browser
       * NOTE: this is only because wrangler.jsonc was changed - not part of normal workflow
       * You may need to do a hard refresh (Ctrl+Shift+R on Windows/Linux, Cmd+Shift+R on macOS) if you're still seeing the old content
 
@@ -212,7 +212,7 @@ Now, all that's left is everything - but it's your everything.
 * After you're done with the initial setup and perusing this guide, you can delete it as well. All the information you'll need going forward is in AGENTS.md and your new README.md
 * If you're using a coding agent have it update AGENTS.md for you with the changes you've made. Keeping that up to date will save you a lot of trouble (and tokens).
 
-You're going to want a reasonable workflow that lets you make changes and try them out without the world seeing every typo and change of direction. The primary workflow is local - ```make -C maint serve```, make your edits, check on your machine and other devices before deploying. If you want to get feedback from a select group of people or test things that have elements that need to be checked in a real environment you'll want to use preview deployments.
+You're going to want a reasonable workflow that lets you make changes and try them out without the world seeing every typo and change of direction. The primary workflow is local - ```make serve```, make your edits, check on your machine and other devices before deploying. If you want to get feedback from a select group of people or test things that have elements that need to be checked in a real environment you'll want to use preview deployments.
 
 If you are not familiar with using git branches and merging back to main, I highly recommend you look into it. Any AI chatbot can give you the hows and whys.
 

@@ -1,15 +1,15 @@
 MAINT_DIR := ../../maint
+
 # must come first
 include $(MAINT_DIR)/common.mk
 
-.PHONY: public sync-domain-names
+.PHONY: public
 
-# HTML_TARGETS defined in common.mk
-# this rule is broken out from common to allow for custom dependencies in the public target
-public: $(HTML_TARGETS) sync-svg-colors favicon sync-domain-names
+# common_public and serve defined in common-targets.mk (i.e. 'make serve' works from this directory)
+# public is broken out like this so you can add custom dependencies to the default target after common_public
+public: common-public
 
-sync-domain-names:
-	bash $(MAINT_DIR)/sync-domain-names.sh
+# include after public: so public is the default target - provides serve sync-domain-names sync-svg-colors and favicon targets
+include $(MAINT_DIR)/common-targets.mk
 
-# include after public: so public is the default target - provides sync-svg-colors and favicon targets
-include $(MAINT_DIR)/favicon.mk
+# custom rules and targets below this line

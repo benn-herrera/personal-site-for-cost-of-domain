@@ -1,3 +1,7 @@
+# resolve maint dir path
+MAINT_DIR := $(shell cd "$(MAINT_DIR)" && pwd)
+PROJECT_ROOT := $(shell cd "$(MAINT_DIR)" && cd .. && pwd)
+
 # Shared configuration and common .md -> html rule for all site roots.
 # Included by each content root's Makefile.
 # Includer must define MAINT_DIR (path to maint/ relative to site dir) before including.

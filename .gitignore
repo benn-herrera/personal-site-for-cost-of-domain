@@ -6,8 +6,6 @@
 !.env.example
 .DS_Store
 
-# build artifacts
-**/generated/
-
 maint/bin/site-tool
 maint/bin/site-tool.exe
+session/
