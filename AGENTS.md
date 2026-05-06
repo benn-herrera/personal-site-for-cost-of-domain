@@ -27,6 +27,8 @@ Cloudflare Worker project backing two domains from one repo.
   * local dev: ?d=[site-domain.tld] sets a session cookie so subsequent internal links inherit the domain without the param; activates for localhost, 127.x.x.x, 192.x.x.x, *.workers.dev
   * cross-site links are absolute URLs so will always point to the deployed site, not the local work in progress.
   * `/feed` and `/feed/` — URL alias → `public/[site-domain.tld]/feed.xml` with `Content-Type: application/rss+xml`
+  * 3xx Location rewrite: ASSETS redirects (e.g. trailing-slash normalization) emit Location with the internal `/{domain}/` prefix; the worker strips that prefix so the browser is redirected to a worker-visible URL rather than re-entering with a doubled prefix.
+  * `withSetCookieSafe(response, setCookie, responseIsImmutable)` helper appends the `?d=` session cookie to outgoing responses; pass `responseIsImmutable=true` only when handing through a raw `env.ASSETS.fetch` response (whose headers are immutable and must be wrapped before mutation).
 
 ## content conventions
 * AI-generated prose is prefixed "AI GEN PLACEHOLDER:" so the author can identify what needs rewriting
