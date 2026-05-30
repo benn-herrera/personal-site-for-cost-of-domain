@@ -2,7 +2,7 @@
 A tool for maintenance operations like maintaining article table of contents and RSS feed that require custom behavior better implemented in a real coding language instead of shell script
 
 ## Why Go
-The two major contenders for this tool were python and go. Because the tool needed to be delivered to users conveniently that pretty muched stabbed python right in the virtual environment. Go lets you cross compile for all targets from any dev host. A single utility binary for 6 possibler configurations. For people who want to modify the tool Go is a single dependency that is easy to install on all platforms. Again, no virtual environment and interpreter versioning mess.
+The two major contenders for this tool were python and go. Because the tool needed to be delivered to users conveniently that pretty much stabbed python right in the virtual environment. Go lets you cross compile for all targets from any dev host. A single utility binary for 6 possible configurations. For people who want to modify the tool Go is a single dependency that is easy to install on all platforms. Again, no virtual environment and interpreter versioning mess.
 
 The tool binary is not referenced directly from makefiles. It is wrapped by `site-tool.sh` which checks for a local build first, then checks for the appropriate os/arch version.
 
@@ -15,11 +15,11 @@ The tool binary is not referenced directly from makefiles. It is wrapped by `sit
 * `dist`: builds the os/arch named binaries for distribution (version controlled via git LFS)
 * `nuke`: removes everything in `../bin/`
 
-## Tool commnds
-All all commands support `--help` for usage
+## Tool commands
+All commands support `--help` for usage
 
 * `gen-toc`
-  * primary command, used for updatding table of contents lists
+  * primary command, used for updating table of contents lists
   * optionally generates RSS feed XML
 * `glyphs`
   * utility for converting characters from local fonts to SVG paths

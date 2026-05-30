@@ -49,17 +49,18 @@ cd public/my-personal-site.me && make public
 cd public/my-second-personal-site.me && make public
 ```
 
-Infra targets (`serve`, `site-tool`) are in `Makefile`:
+Infra targets (`serve`, `site-tool`) are in `Makefile` and are run from the project root:
 ```sh
 make serve
 ```
 
 ### Makefile structure
 
-Each site content root (`public/[site]/`) has a `Makefile` that includes two shared files from `maint/`:
+Each site content root (`public/[site]/`) has a `Makefile` that includes three shared files from `maint/`:
 
-- **`maint/common.mk`** — included first; provides `DOMAIN` (auto-derived from directory name), `SITE_AUTHOR`, `SITE_TOOL_SH`, `GEN_HTML_SH`, recursive `MD_SRCS`/`HTML_TARGETS` via `find`, and the base `%.html: %.md %.template.html` pattern rule.
-- **`maint/favicon.mk`** — included after the site's default target; provides `sync-svg-colors` and `favicon` targets.
+- **`maint/common.mk`** — included first; resolves `MAINT_DIR` to abs path, provides `DOMAIN` (auto-derived from directory name), `PROJECT_ROOT`, `SITE_AUTHOR`, `SITE_TOOL_SH`, `GEN_HTML_SH`, recursive `MD_SRCS`/`HTML_TARGETS` via `find`, and the base `%.html: %.md %.template.html` pattern rule.
+- **`maint/common-targets.mk`** — included after the site's default target; provides `serve`, `sync-domain-names`, and `common-public` targets.
+- **`maint/favicon.mk`** — included from maint/common-targets.mk; provides `sync-svg-colors` and `favicon` targets.
 
 Site Makefiles define only what's site-specific on top of these shared rules.
 
@@ -70,7 +71,12 @@ Site Makefiles define only what's site-specific on top of these shared rules.
 | `sync-svg-colors` | sync CSS colors into favicon.svg (UTD checked against style.css) | `maint/favicon.mk` |
 | `favicon` | regenerate favicon.ico from favicon.svg (macOS uses qlmanage + ImageMagick, Windows/Linux use Inkscape + ImageMagick) | `maint/favicon.mk` |
 | `new-article` | scaffold a new article at `writing/$SLUG/index.md` from template (requires `SLUG=name`) | `public/my-personal-site.me/Makefile` |
+| `content` | build generated text content only (HTML, feed, index list, favicon.svg) — no favicon.ico; called by the pre-commit hook | `maint/common-targets.mk` |
 | `serve` | start wrangler dev on 0.0.0.0 (wrangler prints LAN IP in its startup banner) | `Makefile` |
+| `verify` | run the pre-commit check on demand (thin wrapper: just invokes `maint/githooks/pre-commit`) | `Makefile` (root) |
+| `install-hooks` / `uninstall-hooks` | set / clear `core.hooksPath` = `maint/githooks/` (the pre-commit build + stale-content check) | `Makefile` (root) |
+
+The build + stale-content check lives ENTIRELY in `maint/githooks/pre-commit`, not in a make recipe — it is tree-aware (only meaningful relative to a commit). The hook stashes unstaged + untracked changes (`git stash --keep-index --include-untracked`) so it builds and checks the *staged* snapshot being committed, then restores; this is what lets partial commits work (an unstaged WIP edit elsewhere won't trip the check). The Makefile exposes only plain build targets (`site-tool`, `site-tool-test`, per-site `content`) plus `verify`, which is a one-line wrapper that runs the hook — so the manual pre-commit check and the commit-time check are identical, and neither does a naive whole-tree diff that would choke on a dirty working tree.
 
 Use `make -B [target]` to force a rebuild when only a filter changed — those are not in Make's dependency graph.
 
@@ -79,8 +85,7 @@ Use `make -B [target]` to force a rebuild when only a filter changed — those a
 Makefile                      ← infra targets only: serve, site-tool
 maint/
 ├── common.mk                 ← shared config, MD_SRCS/HTML_TARGETS, base %.html rule
-├── common-targets.mk         ← shared targets common-public, sync-domain, serve plus targets from favicon.mk
-├── favicon.mk                ← shared sync-svg-colors and favicon targets (included by common-targets)
+├── favicon.mk                ← shared sync-svg-colors and favicon targets
 ├── gen-html.sh               ← pandoc wrapper: parses filters: from frontmatter, invokes pandoc
 ├── site-tool.sh              ← platform-detecting wrapper; invokes bin/site-tool or bin/site-tool-{os}-{arch}
 ├── bin/                      ← compiled site-tool binaries (gitignored dev build + LFS dist builds)
@@ -97,7 +102,7 @@ The base rule in `common.mk` handles all `.md` → `.html` conversions. Each `.m
 ### source files (do not hand-edit the HTML they generate)
 | source | generates | template | filters |
 |---|---|---|---|
-| `public/my-second-personal-site.me/index.md` | `index.html` | `index.template.html` (frontmatter) |
+| `public/my-second-personal-site.me/index.md` | `index.html` | `index.template.html` | `foldout` (frontmatter) |
 | `public/my-second-personal-site.me/cv/index.md` | `cv/index.html` | `cv/index.template.html` | none |
 | `public/my-personal-site.me/index.md` | `index.html` | `index.template.html` | none (gen-toc updates article list section first) |
 | `public/my-personal-site.me/projects/index.md` | `projects/index.html` | `projects/index.template.html` | none |
@@ -107,7 +112,7 @@ The base rule in `common.mk` handles all `.md` → `.html` conversions. Each `.m
 The worker serves `index.html` implicitly from directories — `public/site.me/foo/index.html` is served at `https://site.me/foo/` with no `.html` in the URL. All pages follow this pattern: a named directory containing `index.html`.
 
 ### adding a new generated page
-Writing articles under `writing/` are picked up automatically — `common.mk` uses `find` recursively for `MD_SRCS`. Use `make new-article SLUG=my-slug` to scaffold a new article; no other Makefile changes needed.
+Writing articles under `writing/` are picked up automatically — `common.mk` uses `find` recursively for `MD_SRCS`. Use `make new-article SLUG=my-slug` (from the my-personal-site.me content root) to scaffold a new article; no other Makefile changes needed.
 
 For new **structural pages** (site sections, landing pages, etc. outside `writing/`):
 1. Create `foo/index.md` with YAML frontmatter (`title` required)

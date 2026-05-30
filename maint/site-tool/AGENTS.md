@@ -18,7 +18,8 @@ One external dependency: `golang.org/x/image` (for `sfnt` font parsing in `glyph
 | `gentoc.go` | `gen-toc` subcommand |
 | `syncsvgcolors.go` | `sync-svg-colors` subcommand |
 | `glyphs.go` | `glyphs` subcommand |
-| `Makefile` | build/dist/clean targets |
+| `*_test.go` | table-driven unit tests (one per source file); run with `make test` |
+| `Makefile` | build/test/dist/clean targets |
 
 All files are `package main`. Each subcommand lives in its own file with a single `run<Name>(args []string)` entry function.
 
@@ -39,7 +40,8 @@ Verify with `go version` — requires Go 1.23+.
 | target | output | notes |
 |---|---|---|
 | `build` | `maint/bin/site-tool` (or `.exe`) | current platform only; gitignored; for development |
-| `dist` | `maint/bin/site-tool-{os}-{arch}[.exe]` | all 6 targets; checked in via Git LFS |
+| `test` | — | `go test ./...`; pass `VERBOSE=1` for `-v`. Also `make site-tool-test` from repo root |
+| `dist` | `maint/bin/site-tool-{os}-{arch}[.exe]` | all 6 targets; checked in via Git LFS. Depends on `test` — won't build distro binaries if tests fail |
 | `clean` | — | removes local build only |
 | `nuke` | — | removes entire `maint/bin/` |
 
@@ -138,5 +140,6 @@ Extracts font glyphs as SVG `<path>` elements from `.ttf`, `.otf`, or `.ttc` fon
 3. Add a `case "<name>":` in the switch in `main.go` calling `run<Name>(os.Args[2:])`.
 4. Add the command to the `usage` constant in `main.go`.
 5. Bump `version` in `main.go`.
-6. Run `make dist` to rebuild all platform binaries and update `maint/bin/` (LFS).
-7. Update the parent `AGENTS.md` pipeline components section and targets table if relevant.
+6. Add `<name>_test.go` with table-driven tests for the new logic; `make test` must stay green.
+7. Run `make dist` to rebuild all platform binaries and update `maint/bin/` (LFS).
+8. Update the parent `AGENTS.md` pipeline components section and targets table if relevant.

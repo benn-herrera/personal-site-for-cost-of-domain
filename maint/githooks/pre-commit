@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# pre-commit hook — build the site from the STAGED snapshot and block the commit
+# on a build/test failure or on stale generated content, while leaving unstaged
+# work untouched so partial commits work.
+#
+# All tree-aware logic lives here, NOT in the Makefile. The Makefile exposes only
+# plain build targets (site-tool, site-tool-test, and per-site `content`); the
+# stash/restore and the stale-content diff only make sense relative to a commit,
+# so they live in this hook. `make verify` is a thin wrapper that just runs this
+# script, so the manual check and the commit-time check are identical.
+#
+# Strategy: reduce the working tree to exactly the staged content (stash unstaged
+# + untracked; --keep-index leaves the staged content in place), rebuild generated
+# content, and fail if the rebuild changed anything tracked — i.e. committed
+# HTML / feed.xml / index.md list / favicon.svg / src/index.js is stale relative
+# to its sources. favicon.ico is excluded (platform-dependent render, hand-managed
+# via `make favicon`). Then restore the working tree.
+#
+# Safety:
+#   - Only stash/pop when there is something to stash (never pop an unrelated
+#     pre-existing stash).
+#   - Arm the restore trap ONLY after the tree is reduced to the staged snapshot,
+#     so a failed stash can't trigger a checkout-index that clobbers unstaged edits.
+#   - Discard build output before popping so the stash applies without conflict.
+#
+# Wired up by `make install-hooks`. Bypass once with: git commit --no-verify
+set -uo pipefail
+
+ROOT=$(git rev-parse --show-toplevel)
+cd "${ROOT}"
+
+STASHED=0
+if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+    if git stash push --quiet --keep-index --include-untracked --message "pre-commit"; then
+        STASHED=1
+    else
+        echo "pre-commit: 'git stash' failed; commit not verified. Aborting." >&2
+        echo "  (bypass once with: git commit --no-verify)" >&2
+        exit 1
+    fi
+fi
+
+# INVARIANT past this point: the working tree equals the staged index, so
+# discarding tracked changes (checkout-index -f) cannot lose unstaged edits.
+restore() {
+    local rc=$?
+    git checkout-index -a -f -q 2>/dev/null || true   # drop the build's tracked changes
+    git clean -fdq -- public 2>/dev/null || true       # drop the build's untracked output
+    if [ "${STASHED}" = "1" ]; then
+        git stash pop --quiet 2>/dev/null || true
+    fi
+    exit "${rc}"
+}
+trap restore EXIT
+
+# Build site-tool from the staged source and run its unit tests.
+make site-tool      || { echo "pre-commit: site-tool build failed." >&2; exit 1; }
+make site-tool-test || { echo "pre-commit: site-tool tests failed." >&2; exit 1; }
+
+# Rebuild every site's generated content (HTML, feed, index list, favicon.svg).
+for d in public/*/; do
+    [[ -f "${d}Makefile" ]] || continue
+    make -C "${d}" content || { echo "pre-commit: build failed in ${d}" >&2; exit 1; }
+done
+
+# Fail if the rebuild changed any tracked file — committed generated content is
+# stale relative to its sources. favicon.ico excluded (non-reproducible render).
+if ! git diff --exit-code -- . ':(exclude)**/favicon.ico'; then
+    echo "" >&2
+    echo "pre-commit: FAILED — generated content is stale (changed files shown above)." >&2
+    echo "  Rebuild and stage it:   (cd public/<site> && make)  then  git add -A" >&2
+    echo "  Bypass once with:       git commit --no-verify" >&2
+    exit 1
+fi

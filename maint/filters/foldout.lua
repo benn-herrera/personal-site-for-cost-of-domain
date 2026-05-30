@@ -1,4 +1,4 @@
--- me-story.lua
+-- foldout.lua
 -- Pandoc Lua filter for generating foldout sections in HTML from Markdown
 --
 -- Transforms:

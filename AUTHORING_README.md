@@ -1,4 +1,4 @@
-# my-personal-site (rename to match your repo)
+# personal-site
 
 ## Overview
 
@@ -12,7 +12,7 @@
 
 * **Two or more domains, one deployment** — the worker routes by hostname, so two distinct sites can share one repo and one Cloudflare Worker. Useful for keeping a professional/CV site and a writing/projects site (plus any others you want to add) separate in identity while managing them together.
 
-* **Local development with multi-device preview** — `make serve` starts wrangler bound to `0.0.0.0`, making the local server reachable from any device on your network. Check mobile layout and Safari rendering without deploying.
+* **Local development with multi-device preview** — `make -C maint serve` starts wrangler bound to `0.0.0.0`, making the local server reachable from any device on your network. Check mobile layout and Safari rendering without deploying.
 
 ## Cheat Sheet
 Day-to-day authoring reference for this two-domain Cloudflare Worker site. The build pipeline converts Markdown to HTML via pandoc, driven by site Makefiles in each content root (`public/[site]/Makefile`). The authoring utilities at a glance:
@@ -21,7 +21,7 @@ Day-to-day authoring reference for this two-domain Cloudflare Worker site. The b
 * **Build and publish** — `cd public/<domain-name.tld> && make` generates all HTML, updates the article index and RSS feed, and syncs favicon colors.
 * **Favicon colors** — automatically synced from each site's `style.css` when running `make`. Sync manually with `make sync-svg-colors` from the site directory.
 * **site-tool** — the Go binary underlying the pipeline: `gen-toc` (article index + RSS), `sync-svg-colors` (CSS → SVG color sync), `glyphs` (font path extraction for favicon design). See the site-tool section below.
-  * You generally will not be using site-tool directly. It's invoked by `maint/gen-html.sh` and the site Makefiles.
+  * You generally will not be using site-tool directly. It's invoked by the site Makefiles — `gen-toc` from the `index.md` rule, `sync-svg-colors` from `maint/favicon.mk`.
 
 ## Domains
 
@@ -39,7 +39,7 @@ The Worker (`src/index.js`) routes by hostname — each domain maps directly to 
 **Removing a domain** — delete the content root directory, then run:
 
 ```sh
-make sync-domain-names
+make -C maint sync-domain-names
 ```
 
 This updates `src/index.js` to reflect the remaining domains.
@@ -47,7 +47,7 @@ This updates `src/index.js` to reflect the remaining domains.
 ## Local development
 
 ```sh
-make serve
+make -C maint serve
 ```
 NOTE: this is synchronous.
 Wrangler prints your LAN IP in its startup banner.
@@ -78,7 +78,7 @@ cd public/my-second-personal-site.me && make        # build everything + sync SV
 
 There are no separate per-page targets — `make` (i.e. `make public`) builds everything.
 
-Use `make -B` to force a full rebuild when only a filter changed — Lua filters aren't tracked in Make's dependency graph, so changes to them won't trigger a rebuild automatically.
+Use `make -B` to force a full rebuild when only a filter has changed — Lua filters aren't tracked in Make's dependency graph, so changes to them won't trigger a rebuild automatically.
 
 ## Adding pages
 
@@ -115,16 +115,35 @@ Both sites use `favicon.svg` + `favicon.ico` (Safari fallback). The SVG files us
 SVG colors are kept in sync with each site's `style.css` via `site-tool sync-svg-colors`. SVG class names map directly to CSS custom property names (e.g. class `accent` → `--accent`). Run automatically as part of `make`, or manually:
 
 ```sh
-cd public/my-personal-site.me && make sync-svg-colors
-cd public/my-second-personal-site.me && make sync-svg-colors
+cd public/<domain-name.tld> && make sync-svg-colors
 ```
 
-To regenerate an `.ico` from its SVG:
+To regenerate an `.ico` from its SVG (requires ImageMagick):
 
 ```sh
 cd public/my-personal-site.me && make favicon
 cd public/my-second-personal-site.me && make favicon
 ```
+
+On macOS, qlmanage is used for reliable SVG rendering. On Windows and Linux, ImageMagick's SVG renderer is used directly — verify the output looks correct. If the result is bad, fall back to a free online SVG→ICO converter as a one-off. This is rarely needed — only when the favicon design changes.
+
+## Verifying the build
+
+A versioned `pre-commit` hook builds the site and blocks the commit on a build/test failure or on stale generated content. Install it once per clone:
+
+```sh
+make install-hooks            # remove with: make uninstall-hooks
+```
+
+The hook validates the **staged snapshot**: it temporarily stashes unstaged and untracked changes, rebuilds `site-tool` (and runs its tests) plus every site's generated content against exactly what you're committing, then fails if the rebuild changed any tracked file — i.e. if the committed HTML, `feed.xml`, `index.md` article list, `favicon.svg`, or `src/index.js` had drifted from its sources. Because it scopes to the staged content, an in-progress edit elsewhere won't block an unrelated commit. On failure your working tree is left untouched; rebuild with `make` in the affected site, stage the result, and commit again. Bypass once with `git commit --no-verify`.
+
+To run that same check on demand — before attempting a commit, rather than finding out at commit time:
+
+```sh
+make verify
+```
+
+`verify` is a thin wrapper that just runs the hook, so the manual and commit-time checks are identical (both scope to the staged snapshot). The check is tree-aware, so the real logic lives in `maint/githooks/pre-commit`, not in a standalone make recipe. `favicon.ico` is out of scope: its render is platform-dependent and not byte-reproducible, so it's regenerated by hand via `make favicon` when the design changes. Everything runs locally, so the build always uses your own pandoc — no cross-machine version mismatch to manage.
 
 ## site-tool
 

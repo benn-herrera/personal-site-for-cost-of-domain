@@ -63,6 +63,6 @@ function pretty_print() {
     fi
 }
 
-set -x
+! ${TRACE_PANDOC_CALL:-false} || set -x
 pandoc "${MD}" --standalone --strip-comments --template "${TEMPLATE}" ${FILTERS} "${@}" | \
     pretty_print "${HTML}"

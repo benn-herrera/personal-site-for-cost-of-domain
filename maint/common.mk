@@ -6,8 +6,8 @@ PROJECT_ROOT := $(shell cd "$(MAINT_DIR)" && cd .. && pwd)
 # Included by each content root's Makefile.
 # Includer must define MAINT_DIR (path to maint/ relative to site dir) before including.
 
-# configure the author name
-SITE_AUTHOR  := My Name
+# configure the author name. replace with hard-coded name if you like.
+SITE_AUTHOR  ?= $(shell git config --get user.name)
 
 # routes execution to the correct bin/site-tool binary for os/architecture
 SITE_TOOL_SH := $(MAINT_DIR)/site-tool.sh
@@ -18,12 +18,8 @@ GEN_HTML_SH := $(MAINT_DIR)/gen-html.sh
 DOMAIN := $(notdir $(CURDIR))
 
 # recursively finds all page index.md markdown sources and their corresponding html targets under the current directory
-# ignore 'templates' directories
-MD_SRCS      := $(shell find . -type f -name '*.md' | grep -v '/templates/')
+MD_SRCS      := $(shell find . -type f -name '*.md' | grep -Ev '(CLAUDE|AGENTS|README|TODO)\.md|/templates/')
 HTML_TARGETS := $(MD_SRCS:%.md=%.html)
-
-# set to true to use Node.js package 'prettier' to format generated html - see gen-html.sh
-export PRETTY_HTML := false
 
 .PHONY: always
 

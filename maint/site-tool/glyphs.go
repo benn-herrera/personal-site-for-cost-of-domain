@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"math"
 	"os"
+	"strconv"
 	"strings"
 
 	"golang.org/x/image/font/sfnt"
@@ -58,7 +58,7 @@ Options:
 
 	if col, err := sfnt.ParseCollection(data); err == nil {
 		n := col.NumFonts()
-		for i := 0; i < n; i++ {
+		for i := range n {
 			f, err := col.Font(i)
 			if err != nil {
 				continue
@@ -189,12 +189,10 @@ Options:
 }
 
 func fmtCoord(v float64) string {
-	// Format like %g but avoid scientific notation for the coordinate ranges
-	// we expect in SVG favicons (roughly 0–100).
-	if v == math.Trunc(v) {
-		return fmt.Sprintf("%g", v)
-	}
-	return fmt.Sprintf("%g", v)
+	// Shortest decimal that round-trips, with no scientific notation
+	// regardless of magnitude. 'f' format never emits an exponent;
+	// precision -1 uses the fewest digits needed to represent v uniquely.
+	return strconv.FormatFloat(v, 'f', -1, 64)
 }
 
 func transformPt(rawX, rawY fixed.Int26_6, scale, xOffset, baseline float64) (float64, float64) {

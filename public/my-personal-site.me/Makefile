@@ -5,8 +5,8 @@ include $(MAINT_DIR)/common.mk
 
 .PHONY: public
 
-# common_public and serve defined in common-targets.mk (i.e. 'make serve' works from this directory)
-# public is broken out like this so you can add custom dependencies to the default target after common_public
+# common-public and serve defined in common-targets.mk (i.e. 'make serve' works from this directory)
+# public is broken out like this so you can add custom dependencies to the default target after common-public
 public: common-public feed-xml
 
 # include after public: so public is the default target - provides serve sync-domain-names sync-svg-colors and favicon targets
@@ -17,9 +17,6 @@ include $(MAINT_DIR)/common-targets.mk
 FEED_XML              := feed.xml
 ARTICLE_LIST_TEMPLATE := templates/gen-toc-article-list.md
 ARTICLE_TEMPLATE      := writing/article.template.html
-
-.PHONY: feed-xml
-feed-xml: $(FEED_XML)
 
 # .md -> .html override rule for writing/ - they share a common template instead of a sibling .template.html per .md file
 # $(<) expands to the name of the first dependency (the markdown file)
@@ -33,7 +30,7 @@ writing/%/index.html: writing/%/index.md $(ARTICLE_TEMPLATE)
 
 # generate the table of contents and RSS feed. SITE_AUTHOR, SITE_TOOL and DOMAIN defined in common.mk
 index.md: templates/gen-toc-article-list.md always
-	$(SITE_TOOL_SH) gen-toc \
+	@$(SITE_TOOL_SH) gen-toc \
 	    --base-url https://$(DOMAIN) \
 	    --site-desc "Writing by $(SITE_AUTHOR)" \
 	    --articles-dir writing \
@@ -41,12 +38,16 @@ index.md: templates/gen-toc-article-list.md always
 	    --feed-file $(FEED_XML) \
 	    --list-template $(ARTICLE_LIST_TEMPLATE)
 
+.PHONY: feed-xml
+
+feed-xml: $(FEED_XML)
+
 # feed is generated in same process that updates ToC in index.md
 # make -B feed.xml if it is missing and index.md appears up-to-date
 $(FEED_XML): index.md
 
 # block out a new article with a given slug
-.PHONY: new_article
+.PHONY: new-article
 new-article:
 	@test -n "$(SLUG)" || { echo "Usage: make mps-new-article SLUG=my-article-slug" >&2; exit 1; }
 	@mkdir -p writing/$(SLUG)

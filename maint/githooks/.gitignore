@@ -1,0 +1,9 @@
+# This directory is git's core.hooksPath (set by `make install-hooks`), so any
+# tool that auto-installs hooks drops them here. Notably git-lfs installs four:
+# post-checkout, post-commit, post-merge, pre-push. Those are machine-specific
+# (like anything in .git/hooks) and managed by the tool, not by us — ignore
+# everything except our own tracked hook scripts so they neither clutter
+# `git status` nor get committed by accident. LFS keeps working regardless.
+*
+!.gitignore
+!pre-commit

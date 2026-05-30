@@ -3,13 +3,17 @@
 
 BIN_DIR := ../bin
 
-.PHONY: build clean dist nuke
+.PHONY: build clean dist nuke test
 
 # builds for current host platform only. product is .gitignored.
 # cheap, infrequent op, no UTD check. primary use is development and unsupported platforms.
 build:
 	@mkdir -p $(BIN_DIR)
 	go build -o $(BIN_DIR)/ .
+
+# run the unit tests. VERBOSE=1 for per-test output.
+test:
+	go test $(if $(VERBOSE),-v) ./...
 
 clean:
 	echo "cleaning local site-tool build"
@@ -18,7 +22,7 @@ clean:
 
 
 # builds all versions for checking into repo (LFS). infrequent, no UTD check.
-dist:
+dist: test
 	@mkdir -p $(BIN_DIR)
 	GOOS=windows GOARCH=amd64 go build -o $(BIN_DIR)/site-tool-windows-amd64.exe .
 	GOOS=windows GOARCH=arm64 go build -o $(BIN_DIR)/site-tool-windows-arm64.exe .
