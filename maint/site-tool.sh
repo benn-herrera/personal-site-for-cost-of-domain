@@ -2,6 +2,10 @@
 # site-tool wrapper — resolves the correct binary for dev builds or dist packages.
 set -e
 
+# generated content is rebuilt by whichever account runs make - keep it
+# group-writable so a build by one never locks the tree against the other.
+umask 002
+
 TOOL_NAME=$(basename "${0}")
 TOOL_NAME=${TOOL_NAME%.sh}
 SCRIPT_DIR=$(dirname "${0}")

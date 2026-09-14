@@ -26,6 +26,11 @@
 # Wired up by `make install-hooks`. Bypass once with: git commit --no-verify
 set -uo pipefail
 
+# The stash/pop below RECREATES every file it restores, with this process's umask.
+# Without this, a commit made by one account re-locks exactly the files it touched
+# against the other account sharing the tree. Keep restored files group-writable.
+umask 002
+
 ROOT=$(git rev-parse --show-toplevel)
 cd "${ROOT}"
 

@@ -33,4 +33,4 @@ All commands support `--help` for usage
   * used in `site-tool.sh` to verify os/arch compatibility with current system
 
 ## Details
-See AGENTS.md
+See CONVENTIONS.md

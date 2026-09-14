@@ -7,7 +7,7 @@ PROJECT_ROOT := $(shell cd "$(MAINT_DIR)" && cd .. && pwd)
 # Includer must define MAINT_DIR (path to maint/ relative to site dir) before including.
 
 # configure the author name. replace with hard-coded name if you like.
-SITE_AUTHOR  ?= $(shell git config --get user.name)
+SITE_AUTHOR  := $(shell git config --get user.name)
 
 # routes execution to the correct bin/site-tool binary for os/architecture
 SITE_TOOL_SH := $(MAINT_DIR)/site-tool.sh

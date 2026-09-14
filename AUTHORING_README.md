@@ -156,4 +156,4 @@ make site-tool-dist   # cross-compile all platforms
 
 Subcommands: `glyphs`, `gen-toc`, `sync-svg-colors`, `version`. Run `site-tool <command> -help` for options.
 
-Read AGENTS.md for build pipeline details, author contracts, and content conventions.
+Read CONVENTIONS.md for build pipeline details, author contracts, and content conventions.

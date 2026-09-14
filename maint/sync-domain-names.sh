@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
+
+# generated content is rebuilt by whichever account runs make - keep it
+# group-writable so a build by one never locks the tree against the other.
+umask 002
 SCRIPT_DIR=$(dirname "${0}")
 SCRIPT_DIR="$(cd "${SCRIPT_DIR}" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"

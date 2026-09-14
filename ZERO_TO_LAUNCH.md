@@ -1,6 +1,6 @@
 # Zero to Launch
 
-This is a set of high level steps with some notes on gotchas and lore. Between this and AGENTS.md you can walk through getting set up from complete scratch with the help of any free AI chat-based tool. If you're running an agentic coding assistant just have it read this file and AGENTS.md and ask it to guide you through the process.
+This is a set of high level steps with some notes on gotchas and lore. Between this and CONVENTIONS.md you can walk through getting set up from complete scratch with the help of any free AI chat-based tool. If you're running an agentic coding assistant just have it read this file and CONVENTIONS.md and ask it to guide you through the process.
 Either way, that workflow will provide up to date details specific for your needs much better than a document I wrote that "worked for me" however long ago.
 
 This branch of the repo contains the source for a Cloudflare Worker project and the tooling for a Markdown -> Web 1.0 HTML workflow. You'll need to make edits and do some renaming for it to work for the domain name(s) you choose. Domain purchase comes after confirming the setup works — so you're not spending money before knowing everything runs.
@@ -62,7 +62,7 @@ This is used in the converting .svg images to .ico format for the Safari fallbac
 ## Create GitHub account (skip if you already have one appropriate for this project)
 
 ## [Create a new repo from this template](https://github.com/new?template_name=personal-site-for-cost-of-domain&template_owner=benn-herrera) (link will start the process)
-  * Check "Include all branches" (or you'll just get the skeleton project on "main")
+  * Check "Include all branches"
   * Choose a repo name indicating it is a worker project (e.g. personal-site-worker) 
     * Don't name it after your domain - this could easily get confusing or out of date
     * You can actually back multiple domains from one worker project
@@ -93,7 +93,7 @@ This is used in the converting .svg images to .ico format for the Safari fallbac
 
 ### See how multi-site support works (optional - skip if you're only going to serve one domain)
 If you want to serve multiple sites (domains) from this worker you'll need to know how this works.
-AGENTS.md has details, but here's how to test it out of the box.
+CONVENTIONS.md has details, but here's how to test it out of the box.
 * In your browser after the URL in the address bar `http://localhost:8787` add a query parameter so it looks like this: `http://localhost:8787?d=my-second-personal-site.me` and hit 'enter'
 * You should see the site change to My Second Personal Site".
 
@@ -151,7 +151,7 @@ If you skipped the domain purchase step and are not sure what your domain name w
 * INFO (nothing to do): The domain name is inferred automatically from the directory name — no variable to update in any Makefile.
 * `public/**/*.template.html` — templates co-located with their pages contain hardcoded placeholder domain names (`my-personal-site.me`, `my-second-personal-site.me`) in `<title>` tags, RSS link titles, nav name-marks, and cross-site nav links. The agent should grep for these and replace with your actual domains.
 * `public/**/*.md` — the content markdown files contain placeholder domain names in cross-site link text. The agent should search for `my-personal-site.me` and `my-second-personal-site.me` and update any links or references to match your actual domains.
-* `AGENTS.md` and `AUTHORING_README.md` — update the domain and make target name references throughout to match your actual setup.
+* `CONVENTIONS.md` and `AUTHORING_README.md` — update the domain and make target name references throughout to match your actual setup.
 
 After all the renaming is done
   * for each domain directory under public you've set up run ```make -C public/<domain-name.tld>``` to rebuild everything 
@@ -209,8 +209,8 @@ Now, all that's left is everything - but it's your everything.
 
 ## Post-Setup Workflow 
 * remove the old README.md and rename AUTHORING_README.md to README.md - this will be your work reminders.
-* After you're done with the initial setup and perusing this guide, you can delete it as well. All the information you'll need going forward is in AGENTS.md and your new README.md
-* If you're using a coding agent have it update AGENTS.md for you with the changes you've made. Keeping that up to date will save you a lot of trouble (and tokens).
+* After you're done with the initial setup and perusing this guide, you can delete it as well. All the information you'll need going forward is in CONVENTIONS.md and your new README.md
+* If you're using a coding agent have it update CONVENTIONS.md for you with the changes you've made. Keeping that up to date will save you a lot of trouble (and tokens).
 
 You're going to want a reasonable workflow that lets you make changes and try them out without the world seeing every typo and change of direction. The primary workflow is local - ```make serve```, make your edits, check on your machine and other devices before deploying. If you want to get feedback from a select group of people or test things that have elements that need to be checked in a real environment you'll want to use preview deployments.
 
